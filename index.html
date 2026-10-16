@@ -20,13 +20,6 @@
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'sans-serif'],
                         heading: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        brand: {
-                            500: '#06b6d4',
-                            600: '#0891b2',
-                            700: '#0e7490',
-                        }
                     }
                 }
             }
@@ -59,14 +52,6 @@
         .center-glow {
             box-shadow: 0 0 80px rgba(6, 182, 212, 0.35), 0 0 140px rgba(244, 63, 94, 0.2);
         }
-
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(100, 116, 139, 0.5);
-            border-radius: 9999px;
-        }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans h-screen w-screen overflow-hidden select-none">
@@ -75,7 +60,6 @@
     <div class="absolute inset-0 bg-[linear-gradient(to_right,#1e293b20_1px,transparent_1px),linear-gradient(to_bottom,#1e293b20_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none z-10"></div>
     <div class="absolute inset-0 bg-radial from-slate-900/60 via-slate-950/90 to-slate-950 pointer-events-none z-0"></div>
 
-    <!-- Top Floating Header Bar -->
     <header class="absolute top-0 inset-x-0 z-40 p-4 md:p-6 flex justify-between items-center bg-gradient-to-b from-slate-950/90 via-slate-950/40 to-transparent pointer-events-auto">
         <div class="flex items-center space-x-3">
             <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyan-500 to-rose-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
@@ -92,45 +76,38 @@
             </div>
         </div>
 
-        <!-- Right Header Actions (QR Code Modal & Control Switches) -->
+        <!-- Header Controls -->
         <div class="flex items-center gap-3">
-            <!-- Navigation Switcher -->
             <div class="flex items-center bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs font-semibold backdrop-blur-md z-50">
                 <button type="button" id="btnViewVideotron" onclick="switchMainTab('videotron')" class="px-3.5 py-2 rounded-lg text-cyan-400 bg-slate-800 border border-cyan-500/30 transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-tv"></i> <span>Videotron</span>
-                </button>
-                <button type="button" id="btnViewMobile" onclick="switchMainTab('mobile')" class="px-3.5 py-2 rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-mobile-screen-button"></i> <span>Upload HP</span>
+                    <i class="fa-solid fa-tv"></i> <span>Tampilan Videotron</span>
                 </button>
                 <button type="button" id="btnViewAdmin" onclick="switchMainTab('admin')" class="px-3.5 py-2 rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer">
-                    <i class="fa-solid fa-sliders"></i> <span>Admin</span>
+                    <i class="fa-solid fa-sliders"></i> <span>Dashboard Admin</span>
                 </button>
             </div>
 
-            <!-- Fullscreen Toggle Button -->
             <button type="button" onclick="toggleFullScreen()" class="w-10 h-10 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition-all hover:scale-105" title="Toggle Fullscreen">
                 <i class="fa-solid fa-expand text-sm"></i>
             </button>
         </div>
     </header>
 
-    <!-- 1. FULLSCREEN VIDEOTRON VIEW STAGE -->
     <main id="viewVideotron" class="relative w-full h-full flex flex-col items-center justify-center p-2 md:p-6 pt-20">
 
         <!-- LEFT SIDE SCATTERED PHOTOS -->
         <div id="leftScatterContainer" class="absolute left-2 md:left-6 top-24 bottom-16 w-1/5 max-w-[180px] flex flex-col justify-around pointer-events-auto z-20">
-            <!-- Dynamic Left Scatter Cards inserted via JS -->
+            <!-- Dynamic Left Scatter Cards -->
         </div>
 
         <!-- RIGHT SIDE SCATTERED PHOTOS -->
         <div id="rightScatterContainer" class="absolute right-2 md:right-6 top-24 bottom-16 w-1/5 max-w-[180px] flex flex-col justify-around pointer-events-auto z-20">
-            <!-- Dynamic Right Scatter Cards inserted via JS -->
+            <!-- Dynamic Right Scatter Cards -->
         </div>
 
         <!-- CENTER STAGE SPOTLIGHT PHOTO FRAME -->
         <div class="relative z-30 max-w-4xl w-full mx-auto flex flex-col items-center justify-center my-auto px-4">
             
-            <!-- OVERLAY EDITABLE EVENT TITLE ABOVE PHOTO -->
             <div class="text-center mb-3 space-y-0.5">
                 <h1 id="centerMainHeader" class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-rose-300 to-amber-200 font-heading tracking-wider drop-shadow-md">
                     Gala Dinner
@@ -140,16 +117,13 @@
                 </h2>
             </div>
 
-            <!-- Spotlight Enlarged Main Frame -->
             <div class="relative w-full aspect-[16/10] max-h-[62vh] bg-slate-900 rounded-3xl p-3 border-2 border-slate-700/80 center-glow transition-all duration-700 shadow-2xl">
                 
                 <div class="relative w-full h-full rounded-2xl overflow-hidden bg-slate-950 flex items-center justify-center">
-                    <!-- Main Active Photo Image -->
                     <img id="centerFeaturedImg" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80" alt="Spotlight Photo" class="w-full h-full object-cover transition-opacity duration-700">
                     
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/20 to-transparent"></div>
 
-                    <!-- Overlay Sender & Wish Banner -->
                     <div class="absolute bottom-0 inset-x-0 p-5 md:p-7 text-left space-y-1.5">
                         <div class="flex items-center justify-between">
                             <span id="centerFrameBadge" class="text-[10px] md:text-xs uppercase font-extrabold tracking-widest text-cyan-400 bg-cyan-950/90 px-3 py-1 rounded-md border border-cyan-500/30">
@@ -168,7 +142,7 @@
 
             </div>
 
-            <!-- Bottom Floating Controls & Scan QR Indicator -->
+            <!-- Bottom Control Panel & QR Indicator -->
             <div class="mt-4 flex items-center justify-between w-full max-w-2xl bg-slate-900/90 border border-slate-800/90 p-2.5 px-5 rounded-2xl shadow-2xl backdrop-blur-md">
                 
                 <div class="flex items-center gap-3">
@@ -185,15 +159,15 @@
                 </div>
 
                 <!-- QR Call-to-action trigger -->
-                <div onclick="switchMainTab('mobile')" class="flex items-center gap-2.5 cursor-pointer hover:opacity-90 transition-opacity">
+                <a id="qrLinkAnchor" href="upload.html" target="_blank" class="flex items-center gap-2.5 hover:opacity-90 transition-opacity">
                     <div class="bg-white p-1 rounded-lg">
-                        <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://simplemice-demo.local" class="w-8 h-8 rounded">
+                        <img id="qrCodeImg" src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upload.html" class="w-8 h-8 rounded" alt="QR Upload">
                     </div>
                     <div class="text-left hidden sm:block">
-                        <p class="text-[9px] font-bold text-cyan-400 uppercase tracking-wider">Scan QR Upload</p>
-                        <p class="text-[11px] font-semibold text-white leading-tight">Arahkan Kamera HP</p>
+                        <p class="text-[9px] font-bold text-cyan-400 uppercase tracking-wider">Scan QR HP Tamu</p>
+                        <p class="text-[11px] font-semibold text-white leading-tight">Buka upload.html</p>
                     </div>
-                </div>
+                </a>
 
             </div>
 
@@ -201,63 +175,6 @@
 
     </main>
 
-    <!-- 2. GUEST MOBILE UPLOAD VIEW -->
-    <section id="viewMobile" class="hidden relative z-30 w-full h-full flex items-center justify-center p-4 pt-20 overflow-y-auto">
-        <div class="w-full max-w-sm bg-slate-900 border-4 border-slate-700 rounded-[36px] p-4 shadow-2xl relative my-auto">
-            <div class="w-24 h-3.5 bg-slate-800 rounded-b-xl mx-auto mb-3 border-b border-x border-slate-700/60"></div>
-            
-            <div class="text-center pb-2 border-b border-slate-800 mb-3">
-                <span class="text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded-full font-bold uppercase">
-                    Simplemice Guest App
-                </span>
-                <h2 class="text-base font-bold font-heading text-white mt-1">Upload Foto Ke Videotron</h2>
-            </div>
-
-            <div class="space-y-3.5 text-xs">
-                <div>
-                    <label class="block font-semibold text-slate-300 mb-1">Nama / Inisial Pengirim *</label>
-                    <input type="text" id="guestNameInput" placeholder="Contoh: Budi & Sarah" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-cyan-500">
-                </div>
-
-                <div>
-                    <label class="block font-semibold text-slate-300 mb-1">Pilih / Ambil Foto *</label>
-                    <div id="photoDropZone" onclick="document.getElementById('mobileFileInput').click()" class="border-2 border-dashed border-slate-700 hover:border-cyan-500 rounded-xl p-3 text-center cursor-pointer bg-slate-950/50">
-                        <input type="file" id="mobileFileInput" accept="image/*" class="hidden" onchange="handleImageSelect(this)">
-                        <div id="uploadPlaceholder" class="space-y-1">
-                            <i class="fa-solid fa-cloud-arrow-up text-xl text-cyan-400"></i>
-                            <p class="text-xs text-slate-300 font-medium">Klik untuk upload foto</p>
-                        </div>
-                        <div id="uploadPreviewContainer" class="hidden relative">
-                            <img id="mobilePreviewImg" src="" class="max-h-40 rounded-lg mx-auto object-cover border border-slate-700">
-                            <button type="button" onclick="event.stopPropagation(); removeSelectedImage();" class="absolute top-1 right-1 bg-rose-600 text-white rounded-full p-1 text-xs">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <button type="button" id="aiRestyleBtn" onclick="restylePhotoAi()" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 py-2 rounded-xl flex items-center justify-center gap-2 font-medium cursor-pointer">
-                    <i class="fa-solid fa-palette text-amber-300"></i> AI Restyle Photo
-                </button>
-
-                <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="font-semibold text-slate-300">Pesan & Doa Ucapan</label>
-                        <button type="button" id="aiWishBtn" onclick="generateAiWish()" class="text-[10px] text-cyan-400 flex items-center gap-1 bg-cyan-950/80 border border-cyan-500/30 px-2 py-0.5 rounded-full cursor-pointer">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i> AI Magic Wish
-                        </button>
-                    </div>
-                    <textarea id="guestWishInput" rows="2" placeholder="Tulis ucapan selamat..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-white focus:outline-none focus:border-cyan-500 resize-none"></textarea>
-                </div>
-
-                <button type="button" id="mobileSubmitBtn" onclick="submitPhotoFromMobile()" class="w-full bg-gradient-to-r from-cyan-500 to-rose-500 text-white font-bold py-2.5 rounded-xl shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-paper-plane"></i> Kirim Ke Videotron
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. ADMIN & MODERATION CONTROL PANEL VIEW -->
     <section id="viewAdmin" class="hidden relative z-30 w-full h-full max-w-6xl mx-auto p-6 overflow-y-auto pt-24 pb-12">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
             
@@ -277,6 +194,22 @@
                 </div>
             </div>
 
+            <!-- Custom Guest Upload Page Link Box -->
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
+                    <i class="fa-solid fa-link"></i> Pengaturan Link Halaman Guest Upload (QR Code)
+                </h3>
+                <div class="flex flex-col sm:flex-row gap-3 text-xs">
+                    <input type="text" id="uploadPageUrlInput" value="upload.html" placeholder="Contoh: https://eventanda.com/upload.html" class="flex-1 bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:border-cyan-500 focus:outline-none">
+                    <button type="button" onclick="updateUploadUrl()" class="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                        <i class="fa-solid fa-qrcode"></i> Update Link QR Code
+                    </button>
+                </div>
+                <p class="text-[11px] text-slate-400">
+                    Masukkan URL penuh domain web Anda setelah di-upload (misal: <code class="text-cyan-300">https://simplemice.netlify.app/upload.html</code>) agar QR Code di Videotron mengarah ke halaman pengunggah HP tamu.
+                </p>
+            </div>
+
             <!-- EDITABLE HEADER TITLES FORM -->
             <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
@@ -284,11 +217,11 @@
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div>
-                        <label class="block text-slate-400 mb-1">Judul Utama (Baris 1)</label>
+                        <label for="adminMainHeaderInput" class="block text-slate-400 mb-1">Judul Utama (Baris 1)</label>
                         <input type="text" id="adminMainHeaderInput" value="Gala Dinner" placeholder="Contoh: Gala Dinner" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold focus:border-cyan-500 focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-slate-400 mb-1">Sub Judul (Baris 2)</label>
+                        <label for="adminSubHeaderInput" class="block text-slate-400 mb-1">Sub Judul (Baris 2)</label>
                         <input type="text" id="adminSubHeaderInput" value="BNI Enterprise" placeholder="Contoh: BNI Enterprise" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-white font-bold focus:border-cyan-500 focus:outline-none">
                     </div>
                 </div>
@@ -352,7 +285,7 @@
     <script>
         var apiKey = typeof apiKey !== 'undefined' ? apiKey : "";
 
-        // Initial Data
+        // Initial Sample Data
         const initialSampleData = [
             {
                 id: 'photo_1',
@@ -402,13 +335,40 @@
         let activePhotoIndex = 0;
         let slideshowInterval = null;
         let isPlaying = true;
-        let uploadedBase64 = null;
+        let uploadUrl = "upload.html";
         let eventTitles = {
             main: 'Gala Dinner',
             sub: 'BNI Enterprise'
         };
 
         window.onload = function () {
+            loadFromStorage();
+
+            if (document.getElementById('adminMainHeaderInput')) document.getElementById('adminMainHeaderInput').value = eventTitles.main;
+            if (document.getElementById('adminSubHeaderInput')) document.getElementById('adminSubHeaderInput').value = eventTitles.sub;
+            if (document.getElementById('uploadPageUrlInput')) document.getElementById('uploadPageUrlInput').value = uploadUrl;
+
+            applyTitlesToUI();
+            updateQrCode();
+            renderAllViews();
+            startSlideshowLoop();
+            
+            // Listen for cross-tab updates when guests submit photos via upload.html
+            window.addEventListener('storage', (e) => {
+                loadFromStorage();
+                renderAllViews();
+                showToast('Foto Baru Masuk!', 'Ada kiriman foto baru dari tamu!', 'success');
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextPhoto();
+                if (e.key === 'ArrowLeft') prevPhoto();
+                if (e.key === ' ') toggleSlideshow();
+            });
+        };
+
+        function loadFromStorage() {
             try {
                 const savedData = localStorage.getItem('simplemice_photos');
                 if (savedData) {
@@ -419,34 +379,25 @@
                 }
 
                 const savedTitles = localStorage.getItem('simplemice_titles');
-                if (savedTitles) {
-                    eventTitles = JSON.parse(savedTitles);
-                }
+                if (savedTitles) eventTitles = JSON.parse(savedTitles);
+
+                const savedUrl = localStorage.getItem('simplemice_upload_url');
+                if (savedUrl) uploadUrl = savedUrl;
+
+                const savedAuto = localStorage.getItem('simplemice_auto_approve');
+                if (savedAuto !== null) autoApprove = JSON.parse(savedAuto);
             } catch (e) {
                 photoList = [...initialSampleData];
                 saveToLocalStorage();
             }
-
-            // Sync inputs with state
-            if (document.getElementById('adminMainHeaderInput')) document.getElementById('adminMainHeaderInput').value = eventTitles.main;
-            if (document.getElementById('adminSubHeaderInput')) document.getElementById('adminSubHeaderInput').value = eventTitles.sub;
-
-            applyTitlesToUI();
-            renderAllViews();
-            startSlideshowLoop();
-            
-            // Global Keyboard Listeners
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') nextPhoto();
-                if (e.key === 'ArrowLeft') prevPhoto();
-                if (e.key === ' ') toggleSlideshow();
-            });
-        };
+        }
 
         function saveToLocalStorage() {
             try {
                 localStorage.setItem('simplemice_photos', JSON.stringify(photoList));
                 localStorage.setItem('simplemice_titles', JSON.stringify(eventTitles));
+                localStorage.setItem('simplemice_upload_url', uploadUrl);
+                localStorage.setItem('simplemice_auto_approve', JSON.stringify(autoApprove));
             } catch (e) {}
         }
 
@@ -472,32 +423,46 @@
             showToast('Judul Diperbarui', 'Teks header Videotron berhasil disimpan.', 'success');
         }
 
+        function updateUploadUrl() {
+            const urlVal = document.getElementById('uploadPageUrlInput').value.trim() || 'upload.html';
+            uploadUrl = urlVal;
+            saveToLocalStorage();
+            updateQrCode();
+            showToast('QR Code Diperbarui', 'Tautan QR Code pengunggah HP telah diperbarui.', 'success');
+        }
+
+        function updateQrCode() {
+            const qrImg = document.getElementById('qrCodeImg');
+            const qrAnchor = document.getElementById('qrLinkAnchor');
+            const qrTargetUrl = uploadUrl || 'upload.html';
+
+            if (qrImg) {
+                qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrTargetUrl)}`;
+            }
+            if (qrAnchor) {
+                qrAnchor.href = qrTargetUrl;
+            }
+        }
+
         function switchMainTab(view) {
             const viewVideotron = document.getElementById('viewVideotron');
-            const viewMobile = document.getElementById('viewMobile');
             const viewAdmin = document.getElementById('viewAdmin');
 
             if (viewVideotron) viewVideotron.classList.add('hidden');
-            if (viewMobile) viewMobile.classList.add('hidden');
             if (viewAdmin) viewAdmin.classList.add('hidden');
 
             const btnVideotron = document.getElementById('btnViewVideotron');
-            const btnMobile = document.getElementById('btnViewMobile');
             const btnAdmin = document.getElementById('btnViewAdmin');
 
             const defaultClass = 'px-3.5 py-2 rounded-lg text-slate-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer';
             const activeClass = 'px-3.5 py-2 rounded-lg text-cyan-400 bg-slate-800 border border-cyan-500/30 transition-all flex items-center gap-1.5 cursor-pointer';
 
             if (btnVideotron) btnVideotron.className = defaultClass;
-            if (btnMobile) btnMobile.className = defaultClass;
             if (btnAdmin) btnAdmin.className = defaultClass;
 
             if (view === 'videotron') {
                 if (viewVideotron) viewVideotron.classList.remove('hidden');
                 if (btnVideotron) btnVideotron.className = activeClass;
-            } else if (view === 'mobile') {
-                if (viewMobile) viewMobile.classList.remove('hidden');
-                if (btnMobile) btnMobile.className = activeClass;
             } else if (view === 'admin') {
                 if (viewAdmin) viewAdmin.classList.remove('hidden');
                 if (btnAdmin) btnAdmin.className = activeClass;
@@ -612,62 +577,6 @@
             }
         }
 
-        function handleImageSelect(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    uploadedBase64 = e.target.result;
-                    document.getElementById('mobilePreviewImg').src = uploadedBase64;
-                    document.getElementById('uploadPlaceholder').classList.add('hidden');
-                    document.getElementById('uploadPreviewContainer').classList.remove('hidden');
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-
-        function removeSelectedImage() {
-            uploadedBase64 = null;
-            document.getElementById('mobileFileInput').value = '';
-            document.getElementById('uploadPlaceholder').classList.remove('hidden');
-            document.getElementById('uploadPreviewContainer').classList.add('hidden');
-        }
-
-        async function submitPhotoFromMobile() {
-            const name = document.getElementById('guestNameInput').value.trim();
-            const wish = document.getElementById('guestWishInput').value.trim();
-
-            if (!name) {
-                showToast('Nama Wajib', 'Mohon isi nama Anda.', 'error');
-                return;
-            }
-            if (!uploadedBase64) {
-                showToast('Foto Wajib', 'Pilih foto sebelum mengunggah.', 'error');
-                return;
-            }
-
-            const newPhoto = {
-                id: 'photo_' + Date.now(),
-                sender: name,
-                wish: wish || 'Mengirimkan ucapan hangat untuk event ini!',
-                status: autoApprove ? 'approved' : 'pending',
-                timestamp: 'Baru Saja',
-                url: uploadedBase64
-            };
-
-            photoList.unshift(newPhoto);
-            saveToLocalStorage();
-            renderAllViews();
-
-            removeSelectedImage();
-            document.getElementById('guestWishInput').value = '';
-
-            showToast('Berhasil!', autoApprove ? 'Fotomu langsung tampil di Videotron!' : 'Foto dalam moderasi admin.', 'success');
-            if (autoApprove) {
-                activePhotoIndex = 0;
-                switchMainTab('videotron');
-            }
-        }
-
         async function fetchWithBackoff(url, options, maxRetries = 3) {
             let delay = 1000;
             for (let i = 0; i < maxRetries; i++) {
@@ -686,86 +595,6 @@
                 }
             }
             throw new Error("Max retry attempts reached.");
-        }
-
-        async function generateAiWish() {
-            const btn = document.getElementById('aiWishBtn');
-            const input = document.getElementById('guestWishInput');
-            const sender = document.getElementById('guestNameInput').value.trim() || 'Tamu Undangan';
-
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Memproses...`;
-
-            const prompt = `Buatkan ucapan singkat, manis, dan berkesan untuk acara "${eventTitles.main} - ${eventTitles.sub}" dari pengirim "${sender}". Maksimal 2 kalimat.`;
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-
-            try {
-                const res = await fetchWithBackoff(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-                const data = await res.json();
-                const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-                if (text) {
-                    input.value = text.trim();
-                    showToast('AI Wish', 'Ucapan otomatis berhasil dibuat!', 'success');
-                }
-            } catch (err) {
-                input.value = "Selamat untuk acaranya! Semoga sukses, bahagia, dan penuh kebaikan selalu!";
-                showToast('AI Wish', 'Menggunakan ucapan rekomendasi standar.', 'info');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> AI Magic Wish`;
-            }
-        }
-
-        async function restylePhotoAi() {
-            if (!uploadedBase64) {
-                showToast('Pilih Foto', 'Unggah foto terlebih dahulu.', 'error');
-                return;
-            }
-
-            const btn = document.getElementById('aiRestyleBtn');
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Transformasi Foto...`;
-
-            const pureBase64 = uploadedBase64.split(',')[1];
-            const mimeType = uploadedBase64.split(';')[0].split(':')[1] || 'image/png';
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
-            
-            try {
-                const res = await fetchWithBackoff(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            role: "user",
-                            parts: [
-                                { text: "Restyle this photo into an elegant gala dinner celebration portrait with sparkles while preserving faces." },
-                                { inlineData: { mimeType: mimeType, data: pureBase64 } }
-                            ]
-                        }],
-                        generationConfig: { responseModalities: ['TEXT', 'IMAGE'] }
-                    })
-                });
-
-                const data = await res.json();
-                const part = data?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
-
-                if (part && part.inlineData?.data) {
-                    uploadedBase64 = `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
-                    document.getElementById('mobilePreviewImg').src = uploadedBase64;
-                    showToast('Restyle Berhasil', 'Fotomu berganti gaya keren!', 'success');
-                }
-            } catch (err) {
-                showToast('Gagal Restyle', 'Terjadi kesalahan saat memproses gambar.', 'error');
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `<i class="fa-solid fa-palette text-amber-300"></i> AI Restyle Photo`;
-            }
         }
 
         async function generateAiEventSummary() {
@@ -849,6 +678,7 @@
 
         function toggleAutoApprove() {
             autoApprove = !autoApprove;
+            saveToLocalStorage();
             const btn = document.getElementById('autoApproveToggle');
             const dot = document.getElementById('autoApproveDot');
             if (autoApprove) {
