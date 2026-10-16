@@ -310,22 +310,6 @@
                 status: 'approved',
                 timestamp: '2 min ago',
                 url: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=800&q=80'
-            },
-            {
-                id: 'photo_4',
-                sender: 'Reza & Amel',
-                wish: 'Acara Gala Dinner yang sangat berkesan dan menginspirasi!',
-                status: 'approved',
-                timestamp: 'Baru saja',
-                url: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80'
-            },
-            {
-                id: 'photo_5',
-                sender: 'Tim Simplemice',
-                wish: 'Sukses selalu untuk acaranya! Enjoy the night!',
-                status: 'approved',
-                timestamp: 'Baru saja',
-                url: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=800&q=80'
             }
         ];
 
@@ -336,10 +320,14 @@
         let slideshowInterval = null;
         let isPlaying = true;
         let uploadUrl = "upload.html";
+        let lastKnownPhotoCount = 0;
         let eventTitles = {
             main: 'Gala Dinner',
             sub: 'BNI Enterprise'
         };
+
+        // BroadcastChannel listener
+        const broadcast = 'BroadcastChannel' in window ? new BroadcastChannel('simplemice_channel') : null;
 
         window.onload = function () {
             loadFromStorage();
@@ -352,13 +340,38 @@
             updateQrCode();
             renderAllViews();
             startSlideshowLoop();
-            
-            // Listen for cross-tab updates when guests submit photos via upload.html
+
+            // BroadcastChannel message handler
+            if (broadcast) {
+                broadcast.onmessage = function (event) {
+                    if (event.data && event.data.type === 'NEW_PHOTO') {
+                        loadFromStorage();
+                        renderAllViews();
+                        showToast('Foto Baru Masuk!', 'Foto baru berhasil ditayangkan!', 'success');
+                    }
+                };
+            }
+
+            // Sync listener via window storage event
             window.addEventListener('storage', (e) => {
                 loadFromStorage();
                 renderAllViews();
-                showToast('Foto Baru Masuk!', 'Ada kiriman foto baru dari tamu!', 'success');
             });
+
+            // Polling berkala setiap 1.5 detik sebagai pemicu cadangan jika storage event terlewati
+            setInterval(() => {
+                try {
+                    const savedData = localStorage.getItem('simplemice_photos');
+                    if (savedData) {
+                        const parsed = JSON.parse(savedData);
+                        if (parsed.length !== lastKnownPhotoCount) {
+                            photoList = parsed;
+                            lastKnownPhotoCount = parsed.length;
+                            renderAllViews();
+                        }
+                    }
+                } catch(e) {}
+            }, 1500);
 
             // Keyboard navigation
             document.addEventListener('keydown', (e) => {
@@ -373,6 +386,7 @@
                 const savedData = localStorage.getItem('simplemice_photos');
                 if (savedData) {
                     photoList = JSON.parse(savedData);
+                    lastKnownPhotoCount = photoList.length;
                 } else {
                     photoList = [...initialSampleData];
                     saveToLocalStorage();
