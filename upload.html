@@ -77,7 +77,6 @@
         </p>
     </div>
 
-    <!-- Toast Notification -->
     <div id="toast" class="fixed bottom-6 inset-x-4 max-w-sm mx-auto transform translate-y-24 opacity-0 transition-all duration-300 z-50 bg-slate-900 border border-slate-700 text-white p-4 rounded-2xl shadow-2xl flex items-center space-x-3 pointer-events-none">
         <div id="toastIcon" class="w-9 h-9 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold shrink-0">
             <i class="fa-solid fa-circle-check"></i>
@@ -92,7 +91,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Kredensial Firebase Project Live
         const firebaseConfig = {
             apiKey: "AIzaSyARSGnFk3WQ7ZPpInl6DtfnGM5MvJSXsVQ",
             authDomain: "live-photo-7a430.firebaseapp.com",
@@ -110,14 +108,14 @@
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
             isFirebaseActive = true;
-            console.log("Firebase Database terhubung secara aktif!");
         } catch (e) {
-            console.warn("Gagal menghubungkan ke Firebase:", e);
+            console.warn("Gagal terhubung Firebase:", e);
         }
 
         let uploadedBase64 = null;
 
-        window.compressImageBase64 = function(file, maxWidth = 1000, quality = 0.70) {
+        // Image compression helper to prevent Firestore 1MB document limit overflow
+        window.compressImageBase64 = function(file, maxWidth = 800, quality = 0.65) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.readAsDataURL(file);
@@ -138,9 +136,9 @@
                         ctx.drawImage(img, 0, 0, width, height);
                         resolve(canvas.toDataURL('image/jpeg', quality));
                     };
-                    img.onerror = error => reject(error);
+                    img.onerror = err => reject(err);
                 };
-                reader.onerror = error => reject(error);
+                reader.onerror = err => reject(err);
             });
         };
 
@@ -186,13 +184,16 @@
 
             if (isFirebaseActive && db) {
                 try {
-                    await addDoc(collection(db, "photos"), { ...newPhoto, createdAt: serverTimestamp() });
+                    await addDoc(collection(db, "photos"), { 
+                        ...newPhoto, 
+                        createdAt: serverTimestamp(),
+                        timeNum: Date.now()
+                    });
                     showToast('Berhasil Terkirim!', 'Fotomu langsung dikirim ke Cloud & Layar Videotron!', 'success');
                 } catch (err) {
                     showToast('Gagal Cloud', 'Gagal mengirim ke database Firebase.', 'error');
                 }
             } else {
-                // Fallback Local Storage
                 let photoList = [];
                 try {
                     const savedList = localStorage.getItem('simplemice_photos');
